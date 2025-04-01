@@ -8,9 +8,9 @@ import 'package:http/http.dart' as http;
 import "dart:convert";
 
 class BlogNetworkServiceImpl implements BlogNetworkService {
-
   @override
   Future<User> authentifier(Authentification data) async{
+    //
     var url= Uri.parse("http://10.252.252.46:8000/api/login");
     var body=jsonEncode(data.toJson());
     var response= await http.post(

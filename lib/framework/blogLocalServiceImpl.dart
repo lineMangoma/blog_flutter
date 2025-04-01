@@ -11,8 +11,8 @@ class BlogLocalNetworkServiceImpl implements BlogLocalService {
 
   @override
   Future<bool> sauvegarderUser(User user) async{
-    var data=user.toMap();
-    await box?.write("user", jsonEncode(data));
+    var data=user.toMap(); //convertit user en map
+    await box?.write("user", jsonEncode(data)); //Stocke en JSON
     return true;
   }
 
