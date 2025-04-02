@@ -1,6 +1,6 @@
 
 
-import 'package:blog_mobile/login/LoginState.dart';
+import 'package:blog_mobile/business/models/LoginState.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Logincontroller extends StateNotifier <LoginState>{

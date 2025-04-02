@@ -1,6 +1,6 @@
 
 
-import 'package:blog_mobile/business/pages/listArticles/listArticleState.dart';
+import 'package:blog_mobile/business/models/listArticleState.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Listarticlectrl extends StateNotifier <ListeArticlesState>{

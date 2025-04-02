@@ -1,22 +1,22 @@
-import 'package:blog_mobile/login/LoginController.dart';
+
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+class Creationcomptepage extends ConsumerStatefulWidget{
+  const Creationcomptepage({super.key});
 
-
-class Loginpage extends ConsumerStatefulWidget{
   @override
-  ConsumerState<Loginpage> createState() => _LoginpageState();
+  ConsumerState<Creationcomptepage> createState() => _CreationcomptepageState();
 }
 
-class _LoginpageState extends ConsumerState<Loginpage> {
-  
+class _CreationcomptepageState extends ConsumerState<Creationcomptepage> {
   @override
   Widget build(BuildContext context) {
-    var state =ref.watch(loginControllerProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: Text("Create an account",style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
       ),
   body: SingleChildScrollView(
@@ -27,6 +27,17 @@ class _LoginpageState extends ConsumerState<Loginpage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(
+              width: 300,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Name',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.email),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
             SizedBox(
               width: 300,
               child: TextFormField(
@@ -43,7 +54,7 @@ class _LoginpageState extends ConsumerState<Loginpage> {
               child: TextFormField(
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: 'Mot de passe',
+                  labelText: 'Password',
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.lock),
                 ),
@@ -55,19 +66,11 @@ class _LoginpageState extends ConsumerState<Loginpage> {
               width: 300,
               child: FloatingActionButton(
                 onPressed:(){
-                  var ctrl = ref.read(loginControllerProvider.notifier);
-                  ctrl.soumettreFormulaire();
+                  
                 },
-             child: Text(state.isLoading==true? "Chargement ..." :"se connecter"),
+             child: Text("Soumettre"),
             )),
              SizedBox(height: 20),
-            SizedBox(
-              width: 300,
-              child: FloatingActionButton(
-                onPressed:(){},
-             child: Text('Creer un compte'),   ),
-            )
-        
           ],
         ),
       ),

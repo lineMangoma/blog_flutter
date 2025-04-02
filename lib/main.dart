@@ -1,3 +1,4 @@
+import 'package:blog_mobile/business/CreationCompte/CreationComptePage.dart';
 import 'package:blog_mobile/login/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         
       ),
-      home: Loginpage()
+      home: Creationcomptepage()
     );
   }
 }
