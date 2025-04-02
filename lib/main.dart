@@ -1,9 +1,27 @@
-import 'package:blog_mobile/business/CreationCompte/CreationComptePage.dart';
+import 'package:blog_mobile/business/CreationCompte/CreationComptePageState.dart';
+import 'package:blog_mobile/business/services/blogLocalService.dart';
+import 'package:blog_mobile/business/services/blogNetworkService.dart';
+import 'package:blog_mobile/framework/blogLocalServiceImpl.dart';
+import 'package:blog_mobile/framework/blogNetworkServiceImpl.dart';
 import 'package:blog_mobile/login/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
 
+
+var getIt = GetIt.instance;
+void setup(){
+  getIt.registerLazySingleton<BlogNetworkService>(() {
+    return BlogNetworkServiceImpl();
+
+  });
+   getIt.registerLazySingleton<BlogLocalService>(() {
+    return BlogLocalNetworkServiceImpl();
+
+  });
+}
 void main() {
+  setup();
   runApp( ProviderScope(child: MyApp()));
 }
 
