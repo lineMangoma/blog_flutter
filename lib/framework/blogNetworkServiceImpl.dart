@@ -8,6 +8,10 @@ import "dart:convert";
 import '../pages/CreationCompte/CreationCompte.dart';
 
 class BlogNetworkServiceImpl implements BlogNetworkService {
+  String? base_url="";
+  BlogNetworkServiceImpl({this.base_url});
+
+
   @override
   Future<User> authentifier(Authentification data) async{
     //
@@ -32,7 +36,7 @@ class BlogNetworkServiceImpl implements BlogNetworkService {
 
   @override
   Future<User> creerCompte(CreationCompte donnee) async{
-     var url= Uri.parse("http://10.20.20.227:8000/api/register");
+     var url= Uri.parse("$base_url/api/register");
     var body=jsonEncode(donnee.toMap());
     var response= await http.post(
         url,
@@ -45,6 +49,12 @@ class BlogNetworkServiceImpl implements BlogNetworkService {
 
     if(!codes.contains(response.statusCode)){
       var error= resultat["error"];
+
+
+      if (resultat.containsKey("email") && resultat["email"].isNotEmpty) {
+        error=resultat["email"][0];
+      }
+
       throw Exception(error);
     }
     var user=User.fromMap(resultat['data']);
@@ -57,7 +67,19 @@ void main() async{
   var formulaire=Authentification(
       email: "test@gmail.com",
       password: "123456");
-  var service=BlogNetworkServiceImpl();
-  var user= await service.authentifier(formulaire);
+  var service=BlogNetworkServiceImpl(base_url: "http://10.252.252.59:8000");
+  var donnee=CreationCompte(name: "adeline",
+      email: "ruth@sds",
+      password: "123456",
+      password_confirmation: "123456");
+try{
+  var user= await service.creerCompte(donnee);
   print(user.toMap());
+}catch(e){
+  print(e.toString());
+}
+
+  // var user= await service.authentifier(formulaire);
+  // print(user.toMap());
+
 }
