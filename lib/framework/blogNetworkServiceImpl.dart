@@ -1,12 +1,11 @@
 
-import 'package:blog_mobile/business/CreationCompte/CreationCompte.dart';
 import 'package:blog_mobile/business/models/Authentification.dart';
-
 import 'package:blog_mobile/business/models/User.dart';
-
 import '../business/services/blogNetworkService.dart';
 import 'package:http/http.dart' as http;
 import "dart:convert";
+
+import '../pages/CreationCompte/CreationCompte.dart';
 
 class BlogNetworkServiceImpl implements BlogNetworkService {
   @override
