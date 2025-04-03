@@ -2,26 +2,29 @@ import 'package:blog_mobile/business/services/blogLocalService.dart';
 import 'package:blog_mobile/business/services/blogNetworkService.dart';
 import 'package:blog_mobile/framework/blogLocalServiceImpl.dart';
 import 'package:blog_mobile/framework/blogNetworkServiceImpl.dart';
+import 'package:blog_mobile/pages/CreationCompte/CreationComptePage.dart';
 import 'package:blog_mobile/pages/login/loginPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 
-
 var getIt = GetIt.instance;
-void setup(){
+
+void setup() {
+  var host = dotenv.env['HOST'];
   getIt.registerLazySingleton<BlogNetworkService>(() {
-    return BlogNetworkServiceImpl();
-
+    return BlogNetworkServiceImpl(base_url: host);
   });
-   getIt.registerLazySingleton<BlogLocalService>(() {
+  getIt.registerLazySingleton<BlogLocalService>(() {
     return BlogLocalNetworkServiceImpl();
-
   });
 }
-void main() {
+
+void main() async {
+  await dotenv.load(fileName: ".env");
   setup();
-  runApp( ProviderScope(child: MyApp()));
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -35,9 +38,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        
       ),
-      home: LoginPage()
+      home: CreationComptePage(),
     );
   }
 }

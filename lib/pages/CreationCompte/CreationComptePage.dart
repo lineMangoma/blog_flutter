@@ -5,27 +5,41 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'CreationCompte.dart';
 import 'CreationCompteController.dart';
 
-class CreationComptePage extends ConsumerStatefulWidget{
+class CreationComptePage extends ConsumerStatefulWidget {
   const CreationComptePage({super.key});
 
   @override
   ConsumerState<CreationComptePage> createState() => _CreationComptePage();
 }
 
-
 class _CreationComptePage extends ConsumerState<CreationComptePage> {
+
+  final name = TextEditingController(text: "ODC");
+  final emailController = TextEditingController(text: "odc7@gmail.com");
+  final passwordController = TextEditingController(text: "123456");
+  final password_confirmation = TextEditingController(text: "123456");
+
   @override
   Widget build(BuildContext context) {
 
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-    final name = TextEditingController();
-    final password_confirmation = TextEditingController();
-    var state=ref.watch(CreerCompteControllerProvider);
-    
+    var state = ref.watch(CreerCompteControllerProvider);
+
+    ref.listen(CreerCompteControllerProvider, (prev, next) {
+      print("error message ${next.errorMsg}");
+      if (next.errorMsg != null && next.errorMsg !="") {
+        print("SUCCESS error message ${next.errorMsg}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(state.errorMsg??""), backgroundColor: Colors.red),
+        );
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Créer un compte",style: TextStyle(fontWeight: FontWeight.bold),),
+        title: Text(
+          "Créer un compte",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -71,8 +85,6 @@ class _CreationComptePage extends ConsumerState<CreationComptePage> {
                       prefixIcon: Icon(Icons.lock),
                     ),
                   ),
-
-
                 ),
                 SizedBox(height: 8),
                 SizedBox(
@@ -86,32 +98,42 @@ class _CreationComptePage extends ConsumerState<CreationComptePage> {
                       prefixIcon: Icon(Icons.lock),
                     ),
                   ),
-
-
                 ),
 
                 SizedBox(height: 20),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed:(){
+                    onPressed: () async {
+                      var controller = ref.read(
+                        CreerCompteControllerProvider.notifier,
+                      );
+                      var data = CreationCompte(
+                        name: name.text,
+                        password: passwordController.text,
+                        password_confirmation: password_confirmation.text,
+                        email: emailController.text,
+                      );
 
-                         var controller = ref.read(CreerCompteControllerProvider.notifier);
-                      controller.soumettreFormulaire(CreationCompte(name:name.text,password: passwordController.text,password_confirmation: password_confirmation.text,email: emailController.text));
-
-                      if(state.errorMsg != null){
-                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.errorMsg!)));
-                     }
-
+                      var res = await controller.soumettreFormulaire(data);
+                      if (res) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("creation reussie"),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                      }
                     },
-                 child: Text("Soumettre"),
-                )),
-                 SizedBox(height: 20),
+                    child: Text("Soumettre"),
+                  ),
+                ),
+                SizedBox(height: 20),
               ],
             ),
           ),
         ),
       ),
-);
+    );
   }
 }
