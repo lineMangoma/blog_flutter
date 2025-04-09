@@ -48,11 +48,11 @@ class BlogNetworkServiceImpl implements BlogNetworkService {
     var resultat= jsonDecode(response.body) as Map; // Map
 
     if(!codes.contains(response.statusCode)){
-      var error= resultat["error"];
+      print("resultat $resultat");
+      var error= resultat["errors"];
 
-
-      if (resultat.containsKey("email") && resultat["email"].isNotEmpty) {
-        error=resultat["email"][0];
+      if (error.containsKey("email") && error["email"].isNotEmpty) {
+        error=error["email"];
       }
 
       throw Exception(error);

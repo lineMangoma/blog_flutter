@@ -25,9 +25,11 @@ class _CreationComptePage extends ConsumerState<CreationComptePage> {
 
     ref.listen(CreerCompteControllerProvider, (prev, next) {
       if (next.errorMsg != null && next.errorMsg != "") {
+        print("next.errorMsg: ${next.errorMsg}");
+        var exception=(next.errorMsg?? ""). replaceAll("Exception: ", "");
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(state.errorMsg ?? ""),
+            content: Text(exception),
             backgroundColor: Colors.red,
           ),
         );
@@ -42,6 +44,9 @@ class _CreationComptePage extends ConsumerState<CreationComptePage> {
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         centerTitle: true,
+        actions: [IconButton(onPressed: (){
+
+        }, icon: Icon(Icons.dark_mode_sharp, color: Colors.red,))],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -157,7 +162,7 @@ class _CreationComptePage extends ConsumerState<CreationComptePage> {
                         }
                       },
                       child: Text(
-                        "Soumettre",
+                      state.isLoading? "Chargement....":  "Soumettre",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

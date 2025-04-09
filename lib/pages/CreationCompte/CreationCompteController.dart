@@ -28,7 +28,10 @@ class CreationCompteController extends StateNotifier<CreationCompteState> {
 
   Future<bool> soumettreFormulaire(CreationCompte data) async {
     state = state.copyWith(isLoading: true);
-    if (!valider(data)) return false;
+    if (!valider(data)) {
+      state = state.copyWith(isLoading: false);
+      return false;
+    }
 
     try {
       await blogServiceNetwork.creerCompte(data);
@@ -37,6 +40,7 @@ class CreationCompteController extends StateNotifier<CreationCompteState> {
     } catch (e) {
       state = state.copyWith(errorMsg: e.toString(), isLoading: false);
     }
+
     return false;
   }
 }
