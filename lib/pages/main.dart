@@ -17,7 +17,7 @@ void setup() {
     return BlogNetworkServiceImpl(base_url: host);
   });
   getIt.registerLazySingleton<BlogLocalService>(() {
-    return BlogLocalNetworkServiceImpl();
+    return BlogLocalServiceImpl();
   });
 }
 

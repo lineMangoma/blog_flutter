@@ -27,7 +27,7 @@ class CreationCompteController extends StateNotifier<CreationCompteState> {
   }
 
   Future<bool> soumettreFormulaire(CreationCompte data) async {
-    state = state.copyWith(isLoading: true, );
+    state = state.copyWith(isLoading: true);
     if (!valider(data)) return false;
 
     try {
