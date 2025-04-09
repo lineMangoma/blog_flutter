@@ -10,6 +10,7 @@ import 'package:get_it/get_it.dart';
 
 var getIt = GetIt.instance;
 
+
 void setup() {
   var host = dotenv.env['HOST'];
   getIt.registerLazySingleton<BlogNetworkService>(() {
